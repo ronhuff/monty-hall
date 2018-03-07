@@ -14,6 +14,21 @@ Door::~Door()
 {
 }
 
+void Door::setHasCar(bool newBool)
+{
+	m_hasCar = newBool;
+}
+
+void Door::setHasGoat(bool newBool)
+{
+	m_hasGoat = newBool;
+}
+
+void Door::setIsOpen(bool newBool)
+{
+	m_isOpen = newBool;
+}
+
 bool Door::getHasCar() const
 {
 	return (m_hasCar);

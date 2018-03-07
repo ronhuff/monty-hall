@@ -5,6 +5,11 @@ public:
 	Door();
 	~Door();
 
+
+	void setHasCar(bool);
+	void setHasGoat(bool);
+	void setIsOpen(bool);
+
 	bool getHasCar() const;
 	bool getHasGoat() const;
 	bool getIsOpen() const;
