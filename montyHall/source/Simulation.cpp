@@ -1,18 +1,16 @@
 #include "stdafx.h"
-#include "Executive.h"
+#include "..\include\Simulation.h"
 
 
-Executive::Executive()
+Simulation::Simulation()
 {
 	for (int i = 0; i < 3; i++)
 	{
 		m_doors.push_back(Door());
 	}
-
 }
 
 
-Executive::~Executive()
+Simulation::~Simulation()
 {
-
 }
