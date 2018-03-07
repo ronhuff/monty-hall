@@ -13,3 +13,18 @@ Door::Door()
 Door::~Door()
 {
 }
+
+bool Door::getHasCar() const
+{
+	return (m_hasCar);
+}
+
+bool Door::getHasGoat() const
+{
+	return (m_hasGoat);
+}
+
+bool Door::getIsOpen() const
+{
+	return (m_isOpen);
+}
