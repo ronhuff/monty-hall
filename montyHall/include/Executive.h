@@ -1,7 +1,9 @@
 #pragma once
-#include "Door.h"
 #include <memory>
-#include <vector>
+#include "Simulation.h"
+
+class Simulation;
+class Door;
 
 class Executive
 {
@@ -9,9 +11,8 @@ public:
 	Executive();
 	~Executive();
 
-	std::vector<Door> m_doors;
+	void run();
 private:
-	
-
+	std::unique_ptr<Simulation> sim;
 };
 

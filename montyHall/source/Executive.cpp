@@ -4,15 +4,17 @@
 
 Executive::Executive()
 {
-	for (int i = 0; i < 3; i++)
-	{
-		m_doors.push_back(Door());
-	}
-
+	
 }
 
 
 Executive::~Executive()
 {
 
+}
+
+void Executive::run()
+{
+	sim = std::make_unique<Simulation>();
+	sim->run();
 }

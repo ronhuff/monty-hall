@@ -1,5 +1,5 @@
 #include "stdafx.h"
-#include "..\include\Door.h"
+#include "Door.h"
 
 
 Door::Door()
