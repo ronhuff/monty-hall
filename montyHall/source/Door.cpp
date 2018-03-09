@@ -3,7 +3,7 @@
 
 
 Door::Door()
-	: m_hasCar(false), m_hasGoat(false), m_isOpen(false)
+	: m_hasCar(false), m_hasGoat(false), m_isOpen(false), m_isPicked(false)
 {
 
 }
