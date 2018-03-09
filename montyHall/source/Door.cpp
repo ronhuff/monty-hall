@@ -27,6 +27,10 @@ void Door::setIsOpen(bool newBool)
 {
 	m_isOpen = newBool;
 }
+void Door::setIsPicked(bool newBool)
+{
+	m_isPicked = newBool;
+}
 
 bool Door::getHasCar() const
 {
