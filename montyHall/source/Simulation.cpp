@@ -10,14 +10,12 @@ Simulation::Simulation()
 }
 
 Simulation::Simulation(int numRuns, int doorChoice, bool sw)
+	:m_numRuns(numRuns), m_initDoorChoice(doorChoice), m_switchDoor(sw)
 {
 	for (int i = 0; i < 3; i++)
 	{
 		m_doors.push_back(Door());
 	}
-	m_numRuns = numRuns;
-	m_initDoorChoice = doorChoice;
-	m_switchDoor = sw;
 }
 
 Simulation::~Simulation()
