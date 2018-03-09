@@ -46,3 +46,8 @@ bool Door::getIsOpen() const
 {
 	return (m_isOpen);
 }
+
+bool Door::getIsPicked() const
+{
+	return(m_isPicked);
+}

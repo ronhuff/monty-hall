@@ -15,6 +15,7 @@ public:
 	bool getHasCar() const;
 	bool getHasGoat() const;
 	bool getIsOpen() const;
+	bool getIsPicked() const;
 	
 
 private:
