@@ -26,6 +26,7 @@ Simulation::~Simulation()
 void Simulation::run()
 {
 	assignDoors();
+
 }
 
 void Simulation::assignDoors()
@@ -40,4 +41,14 @@ void Simulation::assignDoors()
 		if (goatNum != carDoorNum) break;
 	}
 	m_doors.at(goatNum).setHasGoat(true);
+}
+
+void Simulation::resetDoors()
+{
+	for (std::vector<Door>::iterator doorit = m_doors.begin(); doorit != m_doors.end(); ++doorit)
+	{
+		doorit->setHasCar(false);
+		doorit->setHasGoat(false);
+		doorit->setIsOpen(false);
+	}
 }

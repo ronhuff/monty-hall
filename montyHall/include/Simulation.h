@@ -26,5 +26,6 @@ private:
 	std::vector<Door> m_doors;
 
 	void assignDoors();
+	void resetDoors();
 };
 
