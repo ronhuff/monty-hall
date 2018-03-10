@@ -22,7 +22,6 @@ Simulation::Simulation(int numRuns, int doorChoice, bool sw)
 
 Simulation::~Simulation()
 {
-
 }
 
 void Simulation::run()
@@ -71,4 +70,13 @@ void Simulation::run()
 		noswitch:
 		m_doors.at(m_carDoorNum).setHasCar(false);
 	}
+}
+
+int* Simulation::sendData()
+{
+	int* temp = new int[3];
+	temp[0] = m_numRuns;
+	temp[1] = m_numWins;
+	temp[2] = m_numLoss;
+	return(temp);
 }
