@@ -1,5 +1,6 @@
 #pragma once
 #include <memory>
+#include <iomanip>
 #include "Simulation.h"
 
 class Simulation;
@@ -14,5 +15,8 @@ public:
 	void run();
 private:
 	std::unique_ptr<Simulation> sim;
+
+	void displayData();
+
 };
 
