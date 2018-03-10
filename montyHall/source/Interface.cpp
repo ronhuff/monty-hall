@@ -14,7 +14,7 @@ Interface::~Interface()
 int Interface::displaySimMenu()
 {
 	int choice = 0;
-	std::cout << "\n\t\"Monty Hall Problem\" simulation.\n\n";
+	std::cout << "\n     \"Monty Hall Problem\" simulation.\n\n";
 	std::cout << "Please select from the following options:\n";
 	std::cout << "1) Define Simuation.\n";
 	std::cout << "2) Execute Simulation.\n";
@@ -25,17 +25,7 @@ int Interface::displaySimMenu()
 	{
 		validateInteger(std::cin, choice, "\nPlease choose one of the given options(1-3).\n");
 	}
-	
-	
 	return choice;
-}
-
-void Interface::executeChoice(const int& menuChoice)
-{
-	if (menuChoice == 1)
-	{
-		generateSimRequest();
-	}
 }
 
 std::shared_ptr<int> Interface::generateSimRequest()
@@ -50,11 +40,11 @@ std::shared_ptr<int> Interface::generateSimRequest()
 		validateInteger(std::cin, temp.get()[0], "\nPlease select a number of runs between 1 and 500,000.\n");
 	}
 
-	std::cout << "Please indicate which door you wish to initially choose in each run of the simulation:\n";
+	std::cout << "\nPlease indicate which door you wish to initially choose in each run of the simulation:\n";
 	std::cout << "1)Door #1.\n";
 	std::cout << "2)Door #2.\n";
-	std::cout << "3)Door #3.\n";
-	std::cout << "selection: ";
+	std::cout << "3)Door #3.\n\n";
+	std::cout << "Selection: ";
 	validateInteger(std::cin, temp.get()[1]);
 	while (!(temp.get()[1] > 0 && temp.get()[1] < 4))
 	{
@@ -63,8 +53,8 @@ std::shared_ptr<int> Interface::generateSimRequest()
 
 	std::cout << "\nChoose whether to switch doors after the\nfirst door is opened:\n";
 	std::cout << "1)Yes.\n";
-	std::cout << "2)No.\n";
-	std::cout << "Selection:\n";
+	std::cout << "2)No.\n\n";
+	std::cout << "Selection: ";
 	validateInteger(std::cin, temp.get()[2]);
 	while (!(temp.get()[2] > 0 && temp.get()[2] < 3))
 	{

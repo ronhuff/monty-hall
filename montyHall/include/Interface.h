@@ -2,6 +2,7 @@
 #include <iostream>
 #include <string>
 #include <memory>
+#include "Executive.h"
 
 class Interface
 {
@@ -10,11 +11,11 @@ public:
 	~Interface();
 
 	int displaySimMenu();
-	void executeChoice(const int& menuChoice);
 	
 	std::shared_ptr<int> generateSimRequest();
-private:
 
+private:
 	void validateInteger(std::istream& stream, int& input, const std::string& rangeWarning = "");
+
 };
 

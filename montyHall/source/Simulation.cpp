@@ -30,7 +30,7 @@ void Simulation::run()
 	while (runCount < m_numRuns)
 	{
 		m_carDoorNum = rand() % 3;
-		m_doors[m_carDoorNum].setHasCar(true); // assign car door.
+		m_doors[m_carDoorNum].setHasCar(true);
 
 		if (m_carDoorNum != m_chosenDoorNum && !m_switch)
 		{
@@ -47,7 +47,6 @@ void Simulation::run()
 
 		for (int i = 0; i < 3; i++) // loop through doors.
 		{
-			//the problem is that we are comparing cardoor
 			if (i == m_chosenDoorNum || i == m_carDoorNum) continue; // may not reveal door with car, may not reveal user's initial door.
 			m_revealDoorNum = i;
 			if(i  < 2) break;

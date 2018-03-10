@@ -4,6 +4,7 @@
 
 
 Executive::Executive()
+	:m_interface(std::make_unique<Interface>())
 {
 	
 }
@@ -30,13 +31,20 @@ void Executive::run()
 				switchCase = true;
 			}
 			m_sim = std::make_unique<Simulation>(simRequestData.get()[0], simRequestData.get()[1], switchCase);
-			std::cout << "Simluation parameters accepted.\n";
+			std::cout << "\nSimulation parameters accepted.\n";
 		}
 		else if (choice == 2)
 		{
-			m_sim->run();
-			displayData();
-			m_sim.reset(nullptr);
+			if (m_sim == nullptr)
+			{
+				std::cout << "\nThere is currently no simulation available for execution,\nfeel free to define one.\n";
+			}
+			else
+			{
+				m_sim->run();
+				displayData();
+				m_sim.reset(nullptr);
+			}
 		}
 		else if (choice == 3)
 		{
@@ -55,9 +63,9 @@ void Executive::displayData()
 
 	std::cout << "Simulation Results:\n\n\tRuns Executed: ";
 	std::cout << temp.get()[0] << "\n";
-	std::cout << "\tCars Won:      " << temp.get()[1] << " (";//%'s go inside parens
-	std::cout << ")\n\tGoats Won:     " << temp.get()[2] << " (";
-	std::cout << ")\n";
+	std::cout << "\tCars Won:      " << temp.get()[1];
+	std::cout << "\n\tGoats Won:     " << temp.get()[2];
+	std::cout << "\n\n";
 	
 	std::cout << std::setprecision(ss);
 	temp = nullptr;
