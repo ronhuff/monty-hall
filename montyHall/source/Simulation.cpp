@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "Simulation.h"
-#include <cmath>
+
 
 Simulation::Simulation()
 {
@@ -41,8 +41,14 @@ void Simulation::run()
 		if (m_carDoorNum == m_chosenDoorNum && !m_switch)
 		{
 			m_numWins++;
-			
-			break;
+			runCount++;
+			goto noswitch;
+		}
+		else if(!m_switch)
+		{
+			m_numLoss++;
+			runCount++;
+			goto noswitch;
 		}
 		for (int i = 0; i < 3; i++)
 		{
@@ -61,22 +67,8 @@ void Simulation::run()
 					break;
 				}
 			}
-			else if (!m_switch)
-			{
-				if (m_doors.at(m_switchDoorNum).getHasCar())
-				{
-					m_numWins++;
-					runCount++;
-					break;
-				}
-				else
-				{
-					m_numLoss++;
-					runCount++;
-					break;
-				}
-			}
 		}
+		noswitch:
 		m_doors.at(m_carDoorNum).setHasCar(false);
 	}
 }
