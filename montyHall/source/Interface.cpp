@@ -11,9 +11,9 @@ Interface::~Interface()
 {
 }
 
-int Interface::displaySimMenu() const
+int Interface::displaySimMenu()
 {
-	int choice;
+	int choice = 0;
 	std::cout << "\n\t\"Monty Hall Problem\" simulation.\n\n";
 	std::cout << "Please select from the following options:\n";
 	std::cout << "1) Define Simuation.\n";
@@ -21,17 +21,25 @@ int Interface::displaySimMenu() const
 	std::cout << "3) Exit application.\n\n";
 	std::cout << "Selection: ";
 	validateInteger(std::cin, choice);
-	//executeChoice(choice); 
+	while (!(choice > 0 && choice < 4))
+	{
+		validateInteger(std::cin, choice, "\nPlease choose one of the given options(1-3). \n");
+	}
 	
 	
-	return 0;
+	return choice;
 }
 
-void Interface::validateInteger(std::istream& input, int& variable) const
+void Interface::validateInteger(std::istream& input, int& variable, std::string rangeWarning)
 {
+	if (rangeWarning != "")
+	{
+		std::cout << rangeWarning;
+
+	}
 	while (!(input >> variable))
 	{
-		std::cout << "Please enter a number: \n";
+		std::cout << "\nPlease enter a number: \n";
 		std::cin.clear();
 		std::cin.ignore(100, '\n');
 	}

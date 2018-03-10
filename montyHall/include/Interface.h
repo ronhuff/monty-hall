@@ -1,5 +1,6 @@
 #pragma once
 #include <iostream>
+#include <string>
 
 class Interface
 {
@@ -7,10 +8,10 @@ public:
 	Interface();
 	~Interface();
 
-	int displaySimMenu() const;
+	int displaySimMenu();
 
 private:
 
-	void validateInteger(std::istream&, int&) const;
+	void validateInteger(std::istream& stream, int& input, std::string rangeWarning = "");
 };
 
