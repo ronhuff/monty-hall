@@ -31,58 +31,41 @@ void Simulation::run()
 	{
 		m_carDoorNum = rand() % 3;
 		m_doors[m_carDoorNum].setHasCar(true); // assign car door.
+
 		if (m_carDoorNum != m_chosenDoorNum && !m_switch)
 		{
 			m_numLoss++;
 			runCount++;
 			goto noswitch;
 		}
+		else if(!m_switch)
+		{
+			m_numWins++;
+			runCount++;
+			goto noswitch;
+		}
+
+		for (int i = 0; i < 3; i++) // loop through doors.
+		{
+			//the problem is that we are comparing cardoor
+			if (i == m_chosenDoorNum || i == m_carDoorNum) continue; // may not reveal door with car, may not reveal user's initial door.
+			m_revealDoorNum = i;
+			if(i  < 2) break;
+		}
+		if (m_carDoorNum == m_chosenDoorNum)
+		{
+			m_numLoss++;
+			runCount++;
+		}
 		else
 		{
 			m_numWins++;
 			runCount++;
-			goto noswitch;
-		}
-		for (int i = 0; i < 3; i++) // loop through doors.
-		{
-
-			if (i == m_chosenDoorNum || i == m_carDoorNum) continue;
-			m_revealDoorNum = i;
-			break;
-		}
-		if (m_carDoorNum == m_chosenDoorNum && !m_switch)
-		{
-			m_numWins++;
-			runCount++;
-			goto noswitch;
-		}
-		else if(!m_switch)
-		{
-			m_numLoss++;
-			runCount++;
-			goto noswitch;
-		}
-		for (int i = 0; i < 3; i++)
-		{
-			if (!(i == m_chosenDoorNum || i == m_revealDoorNum) && m_switch)
-			{
-				if (m_doors[i].getHasCar())
-				{
-					m_numWins++;
-					runCount++;
-					break;
-				}
-				else
-				{
-					m_numLoss++;
-					runCount++;
-					break;
-				}
-			}
 		}
 		noswitch:
 		m_doors[m_carDoorNum].setHasCar(false);
-	}
+	}//exit sim
+
 }
 
 std::shared_ptr<float> Simulation::sendData()
