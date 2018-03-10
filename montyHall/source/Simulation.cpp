@@ -12,7 +12,7 @@ Simulation::Simulation()
 
 Simulation::Simulation(int numRuns, int doorChoice, bool sw)
 	:m_numRuns(numRuns), m_chosenDoorNum(doorChoice), m_switchDoorNum(-1), m_revealDoorNum(-1),
-	 m_carDoorNum(-1), m_switch(sw), m_numWins(0), m_numLoss(0), m_results("")
+	 m_carDoorNum(-1), m_switch(sw), m_numWins(0), m_numLoss(0)
 {
 	for (int i = 0; i < 3; i++)
 	{
@@ -72,9 +72,9 @@ void Simulation::run()
 	}
 }
 
-int* Simulation::sendData()
+float* Simulation::sendData()
 {
-	int* temp = new int[3];
+	float* temp = new float[3];
 	temp[0] = m_numRuns;
 	temp[1] = m_numWins;
 	temp[2] = m_numLoss;
