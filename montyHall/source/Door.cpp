@@ -3,7 +3,7 @@
 
 
 Door::Door()
-	: m_hasCar(false), m_hasGoat(false)
+	: m_hasCar(false)
 {
 
 }
@@ -18,17 +18,7 @@ void Door::setHasCar(bool newBool)
 	m_hasCar = newBool;
 }
 
-void Door::setHasGoat(bool newBool)
-{
-	m_hasGoat = newBool;
-}
-
 bool Door::getHasCar() const
 {
 	return (m_hasCar);
-}
-
-bool Door::getHasGoat() const
-{
-	return (m_hasGoat);
 }

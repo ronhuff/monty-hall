@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "Simulation.h"
+#include <cmath>
 
 Simulation::Simulation()
 {
@@ -10,7 +11,8 @@ Simulation::Simulation()
 }
 
 Simulation::Simulation(int numRuns, int doorChoice, bool sw)
-	:m_numRuns(numRuns), m_initDoorChoice(doorChoice), m_switchDoor(sw), m_numWins(0), m_numLoss(0), m_firstOpen(false), m_results("")
+	:m_numRuns(numRuns), m_chosenDoorNum(doorChoice), m_switchDoorNum(-1), m_revealDoorNum(-1),
+	 m_carDoorNum(-1), m_switch(sw), m_numWins(0), m_numLoss(0), m_results("")
 {
 	for (int i = 0; i < 3; i++)
 	{
@@ -23,132 +25,58 @@ Simulation::~Simulation()
 
 }
 
-void Simulation::run() throw(std::exception)
+void Simulation::run()
 {
 	int runCount = 0;
 	while (runCount < m_numRuns)
 	{
-		assignDoors();
-		m_doors.at(m_initDoorChoice).setIsPicked(true);
-		try {
-			if (openDoor())
-			{
-				m_numWins++;
-				runCount++;
-				m_firstOpen = false;
-			}
-			else
-			{
-				m_numLoss++;
-				runCount++;
-				m_firstOpen = false;
-			}
-		}
-		catch (std::exception& e)
+		m_carDoorNum = rand() % 3;
+		m_doors.at(m_carDoorNum).setHasCar(true); // assign car door.
+		for (int i = 0; i < 3; i++) // loop through doors.
 		{
-			// log error to file(implemented later.
-			switchDoor();
-			if (m_doors.at(m_doorChoice).getHasCar())
-			{
-				m_numWins++;
-				runCount++;
-				m_firstOpen = false;
-			}
-			else if (m_doors.at(m_doorChoice).getHasGoat())
-			{
-				m_numLoss++;
-				runCount++;
-				m_firstOpen = false;
-			}
-			else
-			{
-				resetDoors();
-				//throw std::exception("Error occured, final door did not have car or goat.\n");
-			}
+			if (i == m_chosenDoorNum || i == m_carDoorNum) continue;
+			m_revealDoorNum = i;
+			break;
 		}
-		resetDoors();
-	}
-	std::cin.get();
-}
-
-void Simulation::assignDoors()
-{
-	int carDoorNum = rand() % 3;
-	m_doors.at(carDoorNum).setHasCar(true);
-
-	int goatNum;
-	while (1)
-	{
-		goatNum = rand() % 3;
-		if (goatNum != carDoorNum) break;
-	}
-	m_doors.at(goatNum).setHasGoat(true);
-}
-
-void Simulation::resetDoors()
-{
-	for (std::vector<Door>::iterator doorit = m_doors.begin(); doorit != m_doors.end(); ++doorit)
-	{
-		doorit->setHasCar(false);
-		doorit->setHasGoat(false);
-		doorit->setIsOpen(false);
-		doorit->setIsPicked(false);//possibly redundant.
-	}
-}
-
-bool Simulation::openDoor() throw(std::exception)
-{
-	for (std::vector<Door>::iterator doorit = m_doors.begin(); doorit != m_doors.end(); ++doorit)
-	{
-		if ((doorit->getIsPicked() && !m_firstOpen) || doorit->getIsOpen()) continue;
-		else if (!(doorit->getHasCar()) && !m_firstOpen)
+		if (m_carDoorNum == m_chosenDoorNum && !m_switch)
 		{
-			doorit->setIsOpen(true);
-			if (doorit->getHasGoat() == true)
-			{
-				return(false);
-			}
-			else
-			{
-				throw std::exception("Empty door, nothing to return.\n");
-				return(true);
-			}
+			m_numWins++;
+			
+			break;
 		}
-		else if (m_firstOpen)
+		for (int i = 0; i < 3; i++)
 		{
-			if (doorit->getIsPicked() && doorit->getHasCar())
+			if (!(i == m_chosenDoorNum || i == m_revealDoorNum) && m_switch)
 			{
-				return(true);
+				if (m_doors.at(i).getHasCar())
+				{
+					m_numWins++;
+					runCount++;
+					break;
+				}
+				else
+				{
+					m_numLoss++;
+					runCount++;
+					break;
+				}
 			}
-			else if (doorit->getIsPicked() && doorit->getHasGoat())
+			else if (!m_switch)
 			{
-				return(false);
+				if (m_doors.at(m_switchDoorNum).getHasCar())
+				{
+					m_numWins++;
+					runCount++;
+					break;
+				}
+				else
+				{
+					m_numLoss++;
+					runCount++;
+					break;
+				}
 			}
 		}
-	}
-}
-
-void Simulation::switchDoor()
-{
-	if (!m_switchDoor) return;
-	for (std::vector<Door>::iterator doorit = m_doors.begin(); doorit != m_doors.end(); ++doorit)
-	{
-		if (doorit->getIsOpen()) continue;
-		if (doorit->getIsPicked())
-		{
-			doorit->setIsPicked(false);
-			++doorit;
-			doorit->setIsPicked(true);
-			m_doorChoice = doorit - m_doors.begin();
-			return;
-		}
-		else if (!doorit->getIsPicked())
-		{
-			doorit->setIsPicked(true);
-			++doorit;
-			m_doorChoice = doorit - m_doors.begin();
-			doorit->setIsPicked(false);
-			return;
-		}
+		m_doors.at(m_carDoorNum).setHasCar(false);
 	}
 }
