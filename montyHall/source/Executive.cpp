@@ -43,5 +43,5 @@ void Executive::displayData()
 	std::cout << ")\n";
 	
 	std::cout << std::setprecision(ss);
-	delete temp;
+	temp = nullptr;
 }
