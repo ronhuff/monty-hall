@@ -36,6 +36,7 @@ void Executive::run()
 		{
 			m_sim->run();
 			displayData();
+			m_sim.reset(nullptr);
 		}
 		else if (choice == 3)
 		{

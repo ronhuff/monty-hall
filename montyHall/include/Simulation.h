@@ -30,5 +30,7 @@ private:
 	std::vector<Door> m_doors;
 	float m_data[3]; //this array contains data that is sent back to Executive.
 
+	void resetSimulation();
+
 };
 

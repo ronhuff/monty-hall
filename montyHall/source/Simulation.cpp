@@ -65,7 +65,6 @@ void Simulation::run()
 		noswitch:
 		m_doors[m_carDoorNum].setHasCar(false);
 	}//exit sim
-
 }
 
 std::shared_ptr<float> Simulation::sendData()
