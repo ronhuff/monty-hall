@@ -16,6 +16,7 @@ public:
 
 	void run();
 	std::shared_ptr<float> sendData();
+
 private:
 	float m_numRuns;
 	int m_chosenDoorNum;
@@ -30,4 +31,3 @@ private:
 	std::vector<Door> m_doors;
 	float m_data[3]; //this array contains data that is sent back to Executive.
 };
-
