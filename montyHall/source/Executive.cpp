@@ -16,17 +16,30 @@ Executive::~Executive()
 
 void Executive::run()
 {
-	sim = std::make_unique<Simulation>(20000, 1, false);
-	try {
-		sim->run();
-	}
-	catch (std::exception& e)
+	std::shared_ptr<int> simRequestData;
+	int choice = m_interface->displaySimMenu();
+	if (choice == 1)
 	{
-		std::cout << e.what();
-		std::cout << "UNKNOWN ERROR!!\n";
-		//log error to file here.
+		simRequestData = m_interface->generateSimRequest();
+		sim = std::make_unique<Simulation>(simRequestData.get()[0], simRequestData.get()[1], simRequestData.get()[2]);
+		try {
+			sim->run();
+		}
+		catch (std::exception& e)
+		{
+			std::cout << e.what();
+			std::cout << "UNKNOWN ERROR!!\n";
+			//log error to file here.
+		}
+		displayData();
 	}
-	displayData();
+	else
+	{
+		std::cout << "\nExiting application...\n";
+	}
+
+	
+	
 }
 
 void Executive::displayData()
