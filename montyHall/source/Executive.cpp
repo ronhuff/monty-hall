@@ -17,42 +17,45 @@ Executive::~Executive()
 void Executive::run()
 {
 	std::shared_ptr<int> simRequestData;
-	int choice = m_interface->displaySimMenu();
-	if (choice == 1)
+	bool quit = false;
+	while (!quit)
 	{
-		simRequestData = m_interface->generateSimRequest();
-		sim = std::make_unique<Simulation>(simRequestData.get()[0], simRequestData.get()[1], simRequestData.get()[2]);
-		try {
-			sim->run();
-		}
-		catch (std::exception& e)
+		int choice = m_interface->displaySimMenu();
+		if (choice == 1)
 		{
-			std::cout << e.what();
-			std::cout << "UNKNOWN ERROR!!\n";
-			//log error to file here.
+			simRequestData = m_interface->generateSimRequest();
+			bool switchCase = false;
+			if (simRequestData.get()[2] == 1)
+			{
+				switchCase = true;
+			}
+			m_sim = std::make_unique<Simulation>(simRequestData.get()[0], simRequestData.get()[1], switchCase);
+			std::cout << "Simluation parameters accepted.\n";
 		}
-		displayData();
+		else if (choice == 2)
+		{
+			m_sim->run();
+			displayData();
+		}
+		else if (choice == 3)
+		{
+			quit = true;// control condition.
+			std::cout << "\nExiting application...\n";
+		}
 	}
-	else
-	{
-		std::cout << "\nExiting application...\n";
-	}
-
-	
-	
 }
 
 void Executive::displayData()
 {
 	std::streamsize ss = std::cout.precision();
-	float *temp = sim->sendData();
+	std::shared_ptr<float> temp = m_sim->sendData();
 	std::cout << std::fixed;
 	std::cout << std::setprecision(0);
 
 	std::cout << "Simulation Results:\n\n\tRuns Executed: ";
-	std::cout << temp[0] << "\n";
-	std::cout << "\tCars Won:      " << temp[1] << " (";//%'s go inside parens
-	std::cout << ")\n\tGoats Won:     " << temp[2] << " (";
+	std::cout << temp.get()[0] << "\n";
+	std::cout << "\tCars Won:      " << temp.get()[1] << " (";//%'s go inside parens
+	std::cout << ")\n\tGoats Won:     " << temp.get()[2] << " (";
 	std::cout << ")\n";
 	
 	std::cout << std::setprecision(ss);

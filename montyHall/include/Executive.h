@@ -15,7 +15,7 @@ public:
 
 	void run();
 private:
-	std::unique_ptr<Simulation> sim;
+	std::unique_ptr<Simulation> m_sim;
 
 	std::unique_ptr<Interface> m_interface;
 

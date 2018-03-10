@@ -11,11 +11,11 @@ class Simulation
 {
 public:
 	Simulation();
-	Simulation(float numRuns, int doorChoice, bool sw);
+	Simulation(const float& numRuns, const int& doorChoice, const bool& sw);
 	~Simulation();
 
 	void run();
-	float* sendData();
+	std::shared_ptr<float> sendData();
 private:
 	float m_numRuns;
 	int m_chosenDoorNum;
