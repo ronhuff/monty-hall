@@ -3,6 +3,7 @@
 #include <string>
 #include <memory>
 #include "Executive.h"
+#include <SFML/Graphics.hpp>
 
 class Interface
 {
@@ -16,6 +17,6 @@ public:
 
 private:
 	void validateInteger(std::istream& stream, int& input, const std::string& rangeWarning = "");
-
+	void displaySplash();
 };
 

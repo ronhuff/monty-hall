@@ -4,6 +4,7 @@
 
 Interface::Interface()
 {
+	displaySplash();
 }
 
 
@@ -76,5 +77,61 @@ void Interface::validateInteger(std::istream& input, int& variable, const std::s
 		std::cout << "\nPlease enter a number: \n";
 		std::cin.clear();
 		std::cin.ignore(100, '\n');
+	}
+}
+
+
+void Interface::displaySplash()
+{
+	sf::RenderWindow splashWindow(sf::VideoMode(800, 600), "Monty Hall Problem Simulator", sf::Style::None);
+	splashWindow.setPosition(sf::Vector2i(500, 170));
+	splashWindow.setVerticalSyncEnabled(true);
+
+	while (splashWindow.isOpen())
+	{
+
+		sf::Event event;
+		while (splashWindow.pollEvent(event))
+		{
+
+			switch (event.type)
+			{
+			case sf::Event::KeyPressed:
+				{
+					splashWindow.close();
+					break;
+				}
+			case sf::Event::MouseButtonPressed:
+				{
+					splashWindow.close();
+				}
+			case sf::Event::TextEntered:
+				{
+				
+				}
+			case sf::Event::Closed:
+				{
+					splashWindow.close();
+				}
+			}
+		}
+
+		splashWindow.clear(sf::Color(248, 248, 248));
+		//draw things
+		sf::Texture texture;
+		if (!texture.loadFromFile(".\\resources\\img\\splash.png", sf::IntRect(0, 0, 720, 378)));
+		{
+			//error...
+		}
+		texture.setSmooth(true);
+		texture.setRepeated(false);
+
+		sf::Sprite sprite;
+		sprite.setTexture(texture);
+		sprite.setPosition(sf::Vector2f(40, 222));
+
+		splashWindow.draw(sprite);
+		//end current frame
+		splashWindow.display();
 	}
 }
