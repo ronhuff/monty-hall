@@ -1,14 +1,21 @@
 #include "stdafx.h"
 #include "Executive.h"
 
-
-
 Executive::Executive()
-	:m_interface(std::make_unique<Interface>())
 {
-	
 }
 
+Executive::Executive(bool gui)
+{
+	if (gui)
+	{
+		m_interface = (std::make_unique<Interface>(gui));
+	}
+	else
+	{
+		m_interface = (std::make_unique<Interface>());
+	}
+}
 
 Executive::~Executive()
 {

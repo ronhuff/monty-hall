@@ -9,6 +9,7 @@ class Interface
 {
 public:
 	Interface();
+	Interface(bool gui);
 	~Interface();
 
 	int displaySimMenu();
@@ -19,6 +20,18 @@ private:
 	void validateInteger(std::istream& stream, int& input, const std::string& rangeWarning = "");
 	void displaySplash();
 	void displayMain();
-	void displayButtons(sf::Text&, sf::Text&, sf::Text&, sf::Text&, sf::Font&, sf::RectangleShape&);
+	void displayButtons();
+
+
+	bool gui;
+	sf::Font titleFont;
+	sf::Text title;
+	sf::Text butOneText;
+	sf::Text butTwoText;
+	sf::Text butThreeText;
+
+	sf::RectangleShape butOneBox;
+	sf::RectangleShape butTwoBox;
+	sf::RectangleShape butThreeBox;
 };
 

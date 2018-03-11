@@ -12,6 +12,7 @@ class Executive
 {
 public:
 	Executive();
+	Executive(bool gui);
 	~Executive();
 
 	void run();

@@ -3,9 +3,16 @@
 
 
 Interface::Interface()
+	:gui(false)
 {
 	displaySplash();
 	//displayMain();
+}
+
+Interface::Interface(bool gui)
+	:gui(true)
+{
+	displaySplash();
 }
 
 
@@ -87,7 +94,11 @@ void Interface::displaySplash()
 	sf::RenderWindow splashWindow(sf::VideoMode(800, 600), "Splash Screen", sf::Style::None);
 	splashWindow.setPosition(sf::Vector2i(500, 170));
 	splashWindow.setVerticalSyncEnabled(true);
-
+	if (!titleFont.loadFromFile(".\\resources\\font\\calibri.ttf"))
+	{
+		std::cout << "Error loading font!\n";
+	}
+	
 	while (splashWindow.isOpen())
 	{
 
@@ -98,17 +109,34 @@ void Interface::displaySplash()
 			switch (event.type)
 			{
 			case sf::Event::KeyPressed:
+			{
+				if (gui)
 				{
+					splashWindow.close();
 					this->displayMain();
+					break;
+				}
+				else
+				{
 					splashWindow.close();
 					break;
 				}
+			}
 			case sf::Event::MouseButtonPressed:
+			{
+				if (gui)
 				{
 					splashWindow.close();
 					this->displayMain();
 					break;
 				}
+				else
+				{
+					splashWindow.close();
+					break;
+				}
+			}
+
 			case sf::Event::TextEntered:
 				{
 				
@@ -121,20 +149,31 @@ void Interface::displaySplash()
 		}
 
 		splashWindow.clear(sf::Color(248, 248, 248));
-		//draw things
+		
+		//Load splash screen image.
 		sf::Texture texture;
 		if (!texture.loadFromFile(".\\resources\\img\\splash.png", sf::IntRect(0, 0, 720, 378)));
 		{
 			//error...
 		}
+		//Define greeting
+		sf::Text greeting;
+		greeting.setFont(titleFont);
+		greeting.setString("\t\t\t\tWelcome to the\n\"Monty Hall Problem\" simulator!");
+		greeting.setCharacterSize(38);
+		greeting.setFillColor(sf::Color(39, 118, 139));
+		greeting.setPosition(155, 50);
+
+		//Configure splash screen image
 		texture.setSmooth(true);
 		texture.setRepeated(false);
-
 		sf::Sprite sprite;
 		sprite.setTexture(texture);
 		sprite.setPosition(sf::Vector2f(40, 222));
 
+		splashWindow.draw(greeting);
 		splashWindow.draw(sprite);
+
 		//end current frame
 		splashWindow.display();
 	}
@@ -176,79 +215,88 @@ void Interface::displayMain()
 		mainWindow.clear(sf::Color(248, 248, 248));
 
 		//Begin Title Def
-		sf::Font titleFont;
-		sf::Text title;
-		sf::Text but1;
-		sf::Text but2;
-		sf::Text but3;
 
-		sf::RectangleShape defineSimButton(sf::Vector2f(240, 35));
-		this->displayButtons(title, but1, but2, but3, titleFont, defineSimButton);
-		
+		this->displayButtons();// This defines button parameters, size, border, color, text, etc.
 
 		mainWindow.draw(title);
-		mainWindow.draw(defineSimButton);
-		mainWindow.draw(but1);
+		mainWindow.draw(butOneBox);
+		mainWindow.draw(butTwoBox);
+		mainWindow.draw(butThreeBox);
+		mainWindow.draw(butOneText);
+		mainWindow.draw(butTwoText);
+		mainWindow.draw(butThreeText);
 
-		//draw things
-		//sf::Texture texture;
-		//if (!texture.loadFromFile(".\\resources\\img\\splash.png", sf::IntRect(0, 0, 720, 378)));
-		//{
-		//	//error...
-		//}
-		//texture.setSmooth(true);
-		//texture.setRepeated(false);
-
-		//sf::Sprite sprite;
-		//sprite.setTexture(texture);
-		//sprite.setPosition(sf::Vector2f(40, 222));
-
-		//mainWindow.draw(sprite);
 		//end current frame
 		mainWindow.display();
 	}
 }
 
-void Interface::displayButtons(sf::Text& title, sf::Text& but1, sf::Text& but2, sf::Text& but3, sf::Font& titleFont, sf::RectangleShape& defineSimButton) {
+void Interface::displayButtons() {
 
+	sf::ContextSettings settings;
+	settings.antialiasingLevel = 8;
 	//Begin title text
 	if (!titleFont.loadFromFile(".\\resources\\font\\calibri.ttf"))
 	{
 		std::cout << "Error loading font!\n";
 	}
+	//Initialize Text
+	title = sf::Text();
+	butOneText = sf::Text();
+	butTwoText = sf::Text();
+	butThreeText = sf::Text();
 
+	//Initialize Rectangles
+	butOneBox = sf::RectangleShape(sf::Vector2f(240, 45));
+	butTwoBox = sf::RectangleShape(sf::Vector2f(280, 60));
+	butThreeBox = sf::RectangleShape(sf::Vector2f(240, 35));
+
+	//Set Font
 	title.setFont(titleFont);
-	but1.setFont(titleFont);
-	but2.setFont(titleFont);
-	but3.setFont(titleFont);
+	butOneText.setFont(titleFont);
+	butTwoText.setFont(titleFont);
+	butThreeText.setFont(titleFont);
 
+	//Position title
+	title.move(180, 25);
+
+	//Define button text
 	title.setString("\"Monty Hall Problem\" Simulation");
-	but1.setString("Define Simulation.");
-	but2.setString("Execute Simulation.");
-	but3.setString("Exit Application.");
+	butOneText.setString("Define Simulation.");
+	butTwoText.setString("Execute Simulation.");
+	butThreeText.setString("Exit Application.");
 
+	//Define font text
 	title.setCharacterSize(32);
-	but1.setCharacterSize(24);
-	but2.setCharacterSize(24);
-	but3.setCharacterSize(24);
+	butOneText.setCharacterSize(24);
+	butTwoText.setCharacterSize(24);
+	butThreeText.setCharacterSize(24);
 
+	//Define button color
 	title.setFillColor(sf::Color::Black);
-	but1.setFillColor(sf::Color::Black);
-	but2.setFillColor(sf::Color::Black);
-	but3.setFillColor(sf::Color::Black);
+	butOneText.setFillColor(sf::Color::Black);
+	butTwoText.setFillColor(sf::Color::Black);
+	butThreeText.setFillColor(sf::Color::Black);
 
-	float titleWidth = title.getLocalBounds().width;
-	float titleStartX = (800 - titleWidth) / 2;
-	title.move((800 - titleWidth) / 2, 25);
-	//End title text
+	//Button One/Text Positioning
+	butOneBox.setFillColor(sf::Color(136, 202, 221));
+	butOneBox.setOutlineThickness(2);
+	butOneBox.setOutlineColor(sf::Color::Black);
+	butOneBox.move(260, 125);
+	butOneText.move(butOneBox.getPosition() + sf::Vector2f(30, 4));
 
+	//Button Two/Text Positioning
+	butTwoBox.setFillColor(sf::Color(108, 198, 68));
+	butTwoBox.setOutlineThickness(2);
+	butTwoBox.setOutlineColor(sf::Color::Black);
+	butTwoBox.move(240, 190);
+	butTwoText.setPosition(butTwoBox.getPosition() + sf::Vector2f(42, 12));
 
-	defineSimButton.setFillColor(sf::Color(136, 202, 221));
-	defineSimButton.setOutlineThickness(2);
-	defineSimButton.setOutlineColor(sf::Color::Black);
-	defineSimButton.move(titleStartX - 80, 125);
-	sf::Vector2f but1Pos = defineSimButton.getPosition();
-
-	but1.move(but1Pos.x + 30, but1Pos.y + 1);
+	//Button Three/Text Positioning
+	butThreeBox.setFillColor(sf::Color(237, 82, 73));
+	butThreeBox.setOutlineThickness(2);
+	butThreeBox.setOutlineColor(sf::Color::Black);
+	butThreeBox.move(260, 280);
+	butThreeText.setPosition(butThreeBox.getPosition() + sf::Vector2f(34, 4));
 }
 
