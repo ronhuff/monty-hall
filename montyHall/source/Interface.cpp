@@ -5,6 +5,7 @@
 Interface::Interface()
 {
 	displaySplash();
+	//displayMain();
 }
 
 
@@ -83,7 +84,7 @@ void Interface::validateInteger(std::istream& input, int& variable, const std::s
 
 void Interface::displaySplash()
 {
-	sf::RenderWindow splashWindow(sf::VideoMode(800, 600), "Monty Hall Problem Simulator", sf::Style::None);
+	sf::RenderWindow splashWindow(sf::VideoMode(800, 600), "Splash Screen", sf::Style::None);
 	splashWindow.setPosition(sf::Vector2i(500, 170));
 	splashWindow.setVerticalSyncEnabled(true);
 
@@ -98,12 +99,15 @@ void Interface::displaySplash()
 			{
 			case sf::Event::KeyPressed:
 				{
+					this->displayMain();
 					splashWindow.close();
 					break;
 				}
 			case sf::Event::MouseButtonPressed:
 				{
 					splashWindow.close();
+					this->displayMain();
+					break;
 				}
 			case sf::Event::TextEntered:
 				{
@@ -133,5 +137,78 @@ void Interface::displaySplash()
 		splashWindow.draw(sprite);
 		//end current frame
 		splashWindow.display();
+	}
+}
+
+void Interface::displayMain()
+{
+	sf::RenderWindow mainWindow(sf::VideoMode(800, 600), "Monty Hall Problem Simulator", sf::Style::Close);
+	mainWindow.setPosition(sf::Vector2i(500, 170));
+	mainWindow.setVerticalSyncEnabled(true);
+
+	while (mainWindow.isOpen())
+	{
+
+		sf::Event event;
+		while (mainWindow.pollEvent(event))
+		{
+
+			switch (event.type)
+			{
+				case sf::Event::KeyPressed:
+				{
+
+				}
+				case sf::Event::MouseButtonPressed:
+				{
+
+				}
+				case sf::Event::TextEntered:
+				{
+
+				}
+				case sf::Event::Closed:
+				{
+					mainWindow.close();
+				}
+			}
+		}
+
+		mainWindow.clear(sf::Color(248, 248, 248));
+
+		sf::Font titleFont;
+		if (!titleFont.loadFromFile(".\\resources\\font\\calibri.ttf"))
+		{
+			std::cout << "Error loading font!\n";
+		}
+		sf::Text title;
+		title.setFont(titleFont);
+
+		title.setString("\"Monty Hall Problem\" Simulation\n");
+
+		title.setCharacterSize(32);
+
+		title.setFillColor(sf::Color::Black);
+		float titleWidth = title.getLocalBounds().width;
+		title.move((800 - titleWidth) / 2, 25);
+
+		mainWindow.draw(title);
+
+		//draw things
+		//sf::Texture texture;
+		//if (!texture.loadFromFile(".\\resources\\img\\splash.png", sf::IntRect(0, 0, 720, 378)));
+		//{
+		//	//error...
+		//}
+		//texture.setSmooth(true);
+		//texture.setRepeated(false);
+
+		//sf::Sprite sprite;
+		//sprite.setTexture(texture);
+		//sprite.setPosition(sf::Vector2f(40, 222));
+
+		//mainWindow.draw(sprite);
+		//end current frame
+		mainWindow.display();
 	}
 }

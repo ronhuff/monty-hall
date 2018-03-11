@@ -18,5 +18,6 @@ public:
 private:
 	void validateInteger(std::istream& stream, int& input, const std::string& rangeWarning = "");
 	void displaySplash();
+	void displayMain();
 };
 
