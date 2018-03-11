@@ -20,7 +20,7 @@ int Interface::displaySimMenu()
 	std::cout << "Please select from the following options:\n";
 	std::cout << "1) Define Simuation.\n";
 	std::cout << "2) Execute Simulation.\n";
-	std::cout << "3) Exit application.\n\n";
+	std::cout << "3) Exit Application.\n\n";
 	std::cout << "Selection: ";
 	validateInteger(std::cin, choice);
 	while (!(choice > 0 && choice < 4))
@@ -152,7 +152,6 @@ void Interface::displayMain()
 		sf::Event event;
 		while (mainWindow.pollEvent(event))
 		{
-
 			switch (event.type)
 			{
 				case sf::Event::KeyPressed:
@@ -176,23 +175,20 @@ void Interface::displayMain()
 
 		mainWindow.clear(sf::Color(248, 248, 248));
 
+		//Begin Title Def
 		sf::Font titleFont;
-		if (!titleFont.loadFromFile(".\\resources\\font\\calibri.ttf"))
-		{
-			std::cout << "Error loading font!\n";
-		}
 		sf::Text title;
-		title.setFont(titleFont);
+		sf::Text but1;
+		sf::Text but2;
+		sf::Text but3;
 
-		title.setString("\"Monty Hall Problem\" Simulation\n");
-
-		title.setCharacterSize(32);
-
-		title.setFillColor(sf::Color::Black);
-		float titleWidth = title.getLocalBounds().width;
-		title.move((800 - titleWidth) / 2, 25);
+		sf::RectangleShape defineSimButton(sf::Vector2f(240, 35));
+		this->displayButtons(title, but1, but2, but3, titleFont, defineSimButton);
+		
 
 		mainWindow.draw(title);
+		mainWindow.draw(defineSimButton);
+		mainWindow.draw(but1);
 
 		//draw things
 		//sf::Texture texture;
@@ -212,3 +208,47 @@ void Interface::displayMain()
 		mainWindow.display();
 	}
 }
+
+void Interface::displayButtons(sf::Text& title, sf::Text& but1, sf::Text& but2, sf::Text& but3, sf::Font& titleFont, sf::RectangleShape& defineSimButton) {
+
+	//Begin title text
+	if (!titleFont.loadFromFile(".\\resources\\font\\calibri.ttf"))
+	{
+		std::cout << "Error loading font!\n";
+	}
+
+	title.setFont(titleFont);
+	but1.setFont(titleFont);
+	but2.setFont(titleFont);
+	but3.setFont(titleFont);
+
+	title.setString("\"Monty Hall Problem\" Simulation");
+	but1.setString("Define Simulation.");
+	but2.setString("Execute Simulation.");
+	but3.setString("Exit Application.");
+
+	title.setCharacterSize(32);
+	but1.setCharacterSize(24);
+	but2.setCharacterSize(24);
+	but3.setCharacterSize(24);
+
+	title.setFillColor(sf::Color::Black);
+	but1.setFillColor(sf::Color::Black);
+	but2.setFillColor(sf::Color::Black);
+	but3.setFillColor(sf::Color::Black);
+
+	float titleWidth = title.getLocalBounds().width;
+	float titleStartX = (800 - titleWidth) / 2;
+	title.move((800 - titleWidth) / 2, 25);
+	//End title text
+
+
+	defineSimButton.setFillColor(sf::Color(136, 202, 221));
+	defineSimButton.setOutlineThickness(2);
+	defineSimButton.setOutlineColor(sf::Color::Black);
+	defineSimButton.move(titleStartX - 80, 125);
+	sf::Vector2f but1Pos = defineSimButton.getPosition();
+
+	but1.move(but1Pos.x + 30, but1Pos.y + 1);
+}
+

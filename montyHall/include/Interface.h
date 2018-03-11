@@ -19,5 +19,6 @@ private:
 	void validateInteger(std::istream& stream, int& input, const std::string& rangeWarning = "");
 	void displaySplash();
 	void displayMain();
+	void displayButtons(sf::Text&, sf::Text&, sf::Text&, sf::Text&, sf::Font&, sf::RectangleShape&);
 };
 
