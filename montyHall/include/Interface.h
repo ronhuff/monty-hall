@@ -22,6 +22,8 @@ private:
 	void displayMain();
 	void displayButtons();
 
+	bool butClicked(sf::Event& event, sf::RectangleShape& but);
+
 
 	bool gui;
 	sf::Font titleFont;

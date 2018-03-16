@@ -199,7 +199,22 @@ void Interface::displayMain()
 				}
 				case sf::Event::MouseButtonPressed:
 				{
-
+					if (event.mouseButton.button == sf::Mouse::Left)
+					{
+						if(butClicked(event, butOneBox))
+						{
+							std::cout << "User clicked in box one.\n";
+						}
+						else if (butClicked(event, butTwoBox))
+						{
+							std::cout << "User clicked in box two.\n";
+						}
+						else if (butClicked(event, butThreeBox))
+						{
+							std::cout << "User clicked in box three.\n";
+						}
+					}
+					break;
 				}
 				case sf::Event::TextEntered:
 				{
@@ -298,5 +313,19 @@ void Interface::displayButtons() {
 	butThreeBox.setOutlineColor(sf::Color::Black);
 	butThreeBox.move(260, 280);
 	butThreeText.setPosition(butThreeBox.getPosition() + sf::Vector2f(34, 4));
+}
+
+bool Interface::butClicked(sf::Event& event, sf::RectangleShape & but)
+{
+	if ((event.mouseButton.x > but.getPosition().x &&
+		event.mouseButton.x < (but.getPosition().x + but.getLocalBounds().width)) &&
+		event.mouseButton.y > but.getPosition().y && event.mouseButton.y < (but.getPosition().y + but.getLocalBounds().height))
+	{
+		return(true);
+	}
+	else
+	{
+		return(false);
+	}
 }
 
